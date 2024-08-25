@@ -17,7 +17,7 @@ class AdminController extends Controller
         $offers = Offers::all();
         $discounts = Discount::all();
 
-        return;
+        return response()->json(compact($subscriptions, $offers, $discounts));
     }
     // Offers Management
     public function createOffer(Request $request)

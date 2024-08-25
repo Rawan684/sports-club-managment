@@ -21,27 +21,38 @@
     </head>
 
     <body>
-        <div>
-            <h1>{{ $clubInfo['name'] }}</h1>
-            <p>{{ $clubInfo['description'] }}</p>
-            <p>Location: {{ $clubInfo['location'] }}</p>
+        <h1>{{ $club->name }}</h1>
+        <img src="{{ asset($club->logo) }}" alt="Club Logo">
+        <p>{{ $club->address }}</p>
 
-            <h2>Subscription Application Form</h2>
-            <form action="" method="post">
-                @csrf
+        <h2>Sports Offered</h2>
+        <ul>
+            @foreach ($sports as $sport)
+                <li>{{ $sport->name }} - {{ $sport->description }}</li>
+            @endforeach
+        </ul>
+
+        <form method="POST" action="{{ route('club. submitInquiry', $club) }}">
+            @csrf
+            <div>
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name"><br><br>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email"><br><br>
-                <label for="phone">Phone:</label>
-                <input type="tel" id="phone" name="phone"><br><br>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
                 <label for="message">Message:</label>
-                <textarea id="message" name="message"></textarea><br><br>
-                <input type="submit" value="Apply for Subscription">
-            </form>
-
-
-        </div>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <div>
+                <label for="captcha">CAPTCHA:</label>
+                {!! captcha_img() !!}
+                <input type="text" id="captcha" name="captcha" required>
+            </div>
+            <button type="submit">Submit Inquiry</button>
+        </form>
 
     </body>
 
